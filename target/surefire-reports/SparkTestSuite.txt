@@ -1,0 +1,21 @@
+[36mDiscovery starting.[0m
+[36mDiscovery completed in 665 milliseconds.[0m
+[36mRun starting. Expected test count is: 40[0m
+[32mHiveThriftBinaryServerSuite:[0m
+[31morg.apache.spark.sql.hive.Incortathriftserver.HiveThriftBinaryServerSuite *** ABORTED ***[0m
+[31m  java.lang.RuntimeException: Failed to find HiveThriftServer2 log file.[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$org$apache$spark$sql$hive$Incortathriftserver$HiveThriftServer2Test$$startThriftServer$5.apply(HiveThriftServer2Suites.scala:810)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$org$apache$spark$sql$hive$Incortathriftserver$HiveThriftServer2Test$$startThriftServer$5.apply(HiveThriftServer2Suites.scala:810)[0m
+[31m  at scala.Option.getOrElse(Option.scala:121)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test.org$apache$spark$sql$hive$Incortathriftserver$HiveThriftServer2Test$$startThriftServer(HiveThriftServer2Suites.scala:809)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$beforeAll$3$$anonfun$apply$25$$anonfun$apply$2.apply$mcV$sp(HiveThriftServer2Suites.scala:894)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$beforeAll$3$$anonfun$apply$25$$anonfun$apply$2.apply(HiveThriftServer2Suites.scala:894)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$beforeAll$3$$anonfun$apply$25$$anonfun$apply$2.apply(HiveThriftServer2Suites.scala:894)[0m
+[31m  at scala.util.Try$.apply(Try.scala:192)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$beforeAll$3$$anonfun$apply$25.apply(HiveThriftServer2Suites.scala:894)[0m
+[31m  at org.apache.spark.sql.hive.Incortathriftserver.HiveThriftServer2Test$$anonfun$beforeAll$3$$anonfun$apply$25.apply(HiveThriftServer2Suites.scala:891)[0m
+[31m  ...[0m
+[32mCliSuite:[0m
+[32m- Simple commands[0m
+[32m- Single command with -e[0m
+[32m- Single command with --database[0m
