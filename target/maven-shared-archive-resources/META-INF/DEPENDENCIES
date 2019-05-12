@@ -9,6 +9,8 @@ Spark Project Hive Thrift Server
 From: 'an unknown organization'
   - AntLR Parser Generator (http://www.antlr.org/) antlr:antlr:jar:2.7.7
     License: BSD License  (http://www.antlr.org/license.html)
+  - com.incorta.barq  barq:com.incorta.barq:jar:1
+
   - stream-lib (https://github.com/addthis/stream-lib) com.clearspring.analytics:stream:jar:2.7.0
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - Kryo Shaded (https://github.com/EsotericSoftware/kryo/kryo-shaded) com.esotericsoftware:kryo-shaded:bundle:4.0.2

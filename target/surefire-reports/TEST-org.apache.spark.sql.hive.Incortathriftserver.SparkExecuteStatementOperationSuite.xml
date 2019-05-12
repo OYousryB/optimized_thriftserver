@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuite 
-errors="0" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incortathriftserver.SparkExecuteStatementOperationSuite" tests="2" time="0.062" timestamp="2019-05-12T16:52:47">
+errors="0" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incortathriftserver.SparkExecuteStatementOperationSuite" tests="2" time="0.067" timestamp="2019-05-12T16:59:34">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment">
     </property>
@@ -108,10 +108,10 @@ errors="0" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incort
     <property name="sun.cpu.isalist" value=""> </property>
   </properties>
   <testcase 
-  name="SPARK-17112 `select null` via JDBC triggers IllegalArgumentException in ThriftServer" classname="org.apache.spark.sql.hive.Incortathriftserver.SparkExecuteStatementOperationSuite" time="0.053">
+  name="SPARK-17112 `select null` via JDBC triggers IllegalArgumentException in ThriftServer" classname="org.apache.spark.sql.hive.Incortathriftserver.SparkExecuteStatementOperationSuite" time="0.049">
 </testcase>
   <testcase 
-  name="SPARK-20146 Comment should be preserved" classname="org.apache.spark.sql.hive.Incortathriftserver.SparkExecuteStatementOperationSuite" time="0.006">
+  name="SPARK-20146 Comment should be preserved" classname="org.apache.spark.sql.hive.Incortathriftserver.SparkExecuteStatementOperationSuite" time="0.008">
 </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

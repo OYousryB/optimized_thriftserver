@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuite 
-errors="0" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incortathriftserver.HiveCliSessionStateSuite" tests="2" time="0.043" timestamp="2019-05-12T16:52:24">
+errors="0" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incortathriftserver.HiveCliSessionStateSuite" tests="2" time="0.015" timestamp="2019-05-12T16:59:11">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment">
     </property>
@@ -108,10 +108,10 @@ errors="0" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incort
     <property name="sun.cpu.isalist" value=""> </property>
   </properties>
   <testcase 
-  name="CliSessionState will be reused" classname="org.apache.spark.sql.hive.Incortathriftserver.HiveCliSessionStateSuite" time="0.01">
+  name="CliSessionState will be reused" classname="org.apache.spark.sql.hive.Incortathriftserver.HiveCliSessionStateSuite" time="0.006">
 </testcase>
   <testcase 
-  name="SessionState will not be reused" classname="org.apache.spark.sql.hive.Incortathriftserver.HiveCliSessionStateSuite" time="0.0">
+  name="SessionState will not be reused" classname="org.apache.spark.sql.hive.Incortathriftserver.HiveCliSessionStateSuite" time="0.001">
 </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -21,15 +21,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: barq:com.incorta.barq:1">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/work/barq/target/scala-2.11/barq_2.11-1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: barq:com.incorta.barq:1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.spark:spark-hive_2.11:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.twitter:parquet-hadoop-bundle:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.spark:spark-core_2.11:2.4.0" level="project" />

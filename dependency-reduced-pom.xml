@@ -44,9 +44,33 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4.1</version>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>barq</groupId>
+      <artifactId>com.incorta.barq</artifactId>
+      <version>1</version>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-hive_2.11</artifactId>
@@ -401,13 +425,6 @@
           <groupId>org.scala-sbt</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>barq</groupId>
-      <artifactId>com.incorta.barq</artifactId>
-      <version>1</version>
-      <scope>system</scope>
-      <systemPath>/home/omar-hashem/work/barq/target/scala-2.11/barq_2.11-1.0.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

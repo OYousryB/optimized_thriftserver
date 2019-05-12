@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuite 
-errors="1" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incortathriftserver.JdbcConnectionUriSuite" tests="0" time="22.743" timestamp="2019-05-12T16:53:01">
+errors="1" failures="0" hostname="sakran" name="org.apache.spark.sql.hive.Incortathriftserver.JdbcConnectionUriSuite" tests="0" time="22.743" timestamp="2019-05-12T16:59:49">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment">
     </property>
