@@ -22,6 +22,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: barq:com.incorta.barq:1" level="project" />
+    <orderEntry type="library" name="Maven: hermes:com.incorta.hermes:1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.spark:spark-hive_2.11:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.twitter:parquet-hadoop-bundle:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.spark:spark-core_2.11:2.4.0" level="project" />

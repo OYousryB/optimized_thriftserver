@@ -20,6 +20,7 @@ package org.apache.spark.sql.hive.incortathriftserver
 import java.io.PrintStream
 
 import com.incorta.barq.logical.{PredefinedJoinQueryPlanOptimization, PredefinedJoinStrategy}
+import com.incorta.hermes.plan.{FinalOptimization, HermesFilterOptimization, HermesStrategy, HermesViewOptimization, RequiredColumnsOptimization}
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.catalyst.rules.Rule
@@ -54,10 +55,16 @@ private[hive] object SparkSQLEnv extends Logging {
 
       if (optimization == "barq") {
         addOptimization(PredefinedJoinQueryPlanOptimization)
+
         addStrategy(PredefinedJoinStrategy)
       }
       else if (optimization == "hermes") {
-        //        HERMES OPTIMIZATION
+        addOptimization(HermesViewOptimization)
+        addOptimization(RequiredColumnsOptimization)
+        addOptimization(HermesFilterOptimization)
+        addOptimization(FinalOptimization)
+
+        addStrategy(HermesStrategy)
       }
       else {
         sqlContext.experimental.extraOptimizations = Seq()
@@ -83,10 +90,16 @@ private[hive] object SparkSQLEnv extends Logging {
     }
   }
 
-  def addStrategy(strategy: Strategy): Unit =
-    sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ strategy
+  def addStrategy(strategy: Strategy): Unit = {
 
-  def addOptimization(optimization: Rule[LogicalPlan]): Unit =
+    logInfo(s"Adding $strategy Strategy")
+    sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ strategy
+  }
+
+  def addOptimization(optimization: Rule[LogicalPlan]): Unit = {
+    logInfo(s"Adding $optimization Optimization")
     sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ optimization
+
+  }
 
 }

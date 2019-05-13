@@ -9,6 +9,16 @@
     -Dversion=1 \
     -Dpackaging=jar \
     -DgeneratePom=true
+
+# Add Hermes jar 
+    mvn install:install-file \
+    -Dfile=/home/omar-hashem/work/project-hermes/target/scala-2.11/project-hermes-assembly-1.0.jar \
+    -DgroupId=hermes \
+    -DartifactId=com.incorta.hermes \
+    -Dversion=1 \
+    -Dpackaging=jar \
+    -DgeneratePom=true
+
 ﻿
 # Package
     mvn package -Dmaven.test.failure.ignore=true
