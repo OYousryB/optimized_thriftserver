@@ -17,13 +17,13 @@
 
 package org.apache.spark.sql.hive.incortathriftserver.server
 
-import java.util.{Map => JMap}
 import java.util.concurrent.ConcurrentHashMap
+import java.util.{Map => JMap}
 
+import com.incorta.barq.logical.{PredefinedJoinQueryPlanOptimization, PredefinedJoinStrategy}
 import org.apache.hive.service.cli._
 import org.apache.hive.service.cli.operation.{ExecuteStatementOperation, Operation, OperationManager}
 import org.apache.hive.service.cli.session.HiveSession
-
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.hive.HiveUtils
@@ -48,6 +48,13 @@ private[incortathriftserver] class SparkSQLOperationManager()
       confOverlay: JMap[String, String],
       async: Boolean): ExecuteStatementOperation = synchronized {
     val sqlContext = sessionToContexts.get(parentSession.getSessionHandle)
+
+    logInfo("Adding PredefinedJoinQueryPlanOptimization Optimization")
+    sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ PredefinedJoinQueryPlanOptimization
+
+    logInfo("Adding PredefinedJoinStrategy Strategy")
+    sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ PredefinedJoinStrategy
+
     require(sqlContext != null, s"Session handle: ${parentSession.getSessionHandle} has not been" +
       s" initialized or had already closed.")
     val conf = sqlContext.sessionState.conf
@@ -58,7 +65,7 @@ private[incortathriftserver] class SparkSQLOperationManager()
     val operation = new SparkExecuteStatementOperation(parentSession, statement, confOverlay,
       runInBackground)(sqlContext, sessionToActivePool)
     handleToOperation.put(operation.getHandle, operation)
-    logDebug(s"Created Operation for $statement with session=$parentSession, " +
+    println(s"Created Operation for $statement with session=$parentSession, " +
       s"runInBackground=$runInBackground")
     operation
   }

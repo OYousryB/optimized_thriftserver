@@ -229,6 +229,8 @@ object HiveThriftServer2 extends Logging {
     }
 
     def onStatementParsed(id: String, executionPlan: String): Unit = synchronized {
+      println(executionPlan)
+
       executionList(id).executePlan = executionPlan
       executionList(id).state = ExecutionState.COMPILED
     }

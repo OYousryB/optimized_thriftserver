@@ -47,24 +47,34 @@ private[hive] object SparkSQLEnv extends Logging {
         .filterNot(_ == classOf[HiveThriftServer2].getName)
 
       sparkConf
-        .setAppName(maybeAppName.getOrElse(s"SparkSQL::${Utils.localHostName()}"))
+        .setAppName(maybeAppName.getOrElse(s"$optimization SparkSQL::${Utils.localHostName()}"))
 
       val sparkSession = SparkSession.builder.config(sparkConf).enableHiveSupport().getOrCreate()
       sparkContext = sparkSession.sparkContext
       sqlContext = sparkSession.sqlContext
 
       if (optimization == "barq") {
-        addOptimization(PredefinedJoinQueryPlanOptimization)
+        logInfo("Adding PredefinedJoinQueryPlanOptimization Optimization")
+        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ PredefinedJoinQueryPlanOptimization
 
-        addStrategy(PredefinedJoinStrategy)
+        logInfo("Adding PredefinedJoinStrategy Strategy")
+        sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ PredefinedJoinStrategy
       }
       else if (optimization == "hermes") {
-        addOptimization(HermesViewOptimization)
-        addOptimization(RequiredColumnsOptimization)
-        addOptimization(HermesFilterOptimization)
-        addOptimization(FinalOptimization)
+        logInfo("Adding HermesViewOptimization Optimization")
+        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ HermesViewOptimization
 
-        addStrategy(HermesStrategy)
+        logInfo("Adding RequiredColumnsOptimization Optimization")
+        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ RequiredColumnsOptimization
+
+        logInfo("Adding HermesFilterOptimization Optimization")
+        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ HermesFilterOptimization
+
+        logInfo("Adding FinalOptimization Optimization")
+        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ FinalOptimization
+
+        logInfo("Adding HermesStrategy Strategy")
+        sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ HermesStrategy
       }
       else {
         sqlContext.experimental.extraOptimizations = Seq()
