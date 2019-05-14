@@ -21,4 +21,4 @@
 
 ﻿
 # Package
-    mvn package -Dmaven.test.failure.ignore=true
+     mvn -T 100  package -Dmaven.test.skip -DskipTests

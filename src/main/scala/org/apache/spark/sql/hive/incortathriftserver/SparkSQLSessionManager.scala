@@ -17,16 +17,12 @@
 
 package org.apache.spark.sql.hive.incortathriftserver
 
-import java.util.concurrent.Executors
-
-import org.apache.commons.logging.Log
+import com.incorta.barq.logical.{PredefinedJoinQueryPlanOptimization, PredefinedJoinStrategy}
 import org.apache.hadoop.hive.conf.HiveConf
-import org.apache.hadoop.hive.conf.HiveConf.ConfVars
 import org.apache.hive.service.cli.SessionHandle
 import org.apache.hive.service.cli.session.SessionManager
 import org.apache.hive.service.cli.thrift.TProtocolVersion
 import org.apache.hive.service.server.HiveServer2
-
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.hive.HiveUtils
 import org.apache.spark.sql.hive.incortathriftserver.ReflectionUtils._
@@ -67,6 +63,13 @@ private[hive] class SparkSQLSessionManager(hiveServer: HiveServer2, sqlContext: 
     if (sessionConf != null && sessionConf.containsKey("use:database")) {
       ctx.sql(s"use ${sessionConf.get("use:database")}")
     }
+
+    println("Adding PredefinedJoinQueryPlanOptimization Optimization")
+    ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ PredefinedJoinQueryPlanOptimization
+
+    println("Adding PredefinedJoinStrategy Strategy")
+    ctx.experimental.extraStrategies = ctx.experimental.extraStrategies :+ PredefinedJoinStrategy
+
     sparkSqlOperationManager.sessionToContexts.put(sessionHandle, ctx)
     sessionHandle
   }

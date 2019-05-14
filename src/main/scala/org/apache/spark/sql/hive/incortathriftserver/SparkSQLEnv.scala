@@ -19,8 +19,7 @@ package org.apache.spark.sql.hive.incortathriftserver
 
 import java.io.PrintStream
 
-import com.incorta.barq.logical.{PredefinedJoinQueryPlanOptimization, PredefinedJoinStrategy}
-import com.incorta.hermes.plan.{FinalOptimization, HermesFilterOptimization, HermesStrategy, HermesViewOptimization, RequiredColumnsOptimization}
+import com.incorta.barq.physical.PredefinedJoinExec
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.catalyst.rules.Rule
@@ -38,6 +37,8 @@ private[hive] object SparkSQLEnv extends Logging {
 
   def init(optimization: String = "vanilla") {
     if (sqlContext == null) {
+
+
       val sparkConf = new SparkConf(loadDefaults = true)
       // If user doesn't specify the appName, we want to get [SparkSQL::localHostName] instead of
       // the default appName [SparkSQLCLIDriver] in cli or beeline.
@@ -53,32 +54,7 @@ private[hive] object SparkSQLEnv extends Logging {
       sparkContext = sparkSession.sparkContext
       sqlContext = sparkSession.sqlContext
 
-      if (optimization == "barq") {
-        logInfo("Adding PredefinedJoinQueryPlanOptimization Optimization")
-        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ PredefinedJoinQueryPlanOptimization
-
-        logInfo("Adding PredefinedJoinStrategy Strategy")
-        sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ PredefinedJoinStrategy
-      }
-      else if (optimization == "hermes") {
-        logInfo("Adding HermesViewOptimization Optimization")
-        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ HermesViewOptimization
-
-        logInfo("Adding RequiredColumnsOptimization Optimization")
-        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ RequiredColumnsOptimization
-
-        logInfo("Adding HermesFilterOptimization Optimization")
-        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ HermesFilterOptimization
-
-        logInfo("Adding FinalOptimization Optimization")
-        sqlContext.experimental.extraOptimizations = sqlContext.experimental.extraOptimizations :+ FinalOptimization
-
-        logInfo("Adding HermesStrategy Strategy")
-        sqlContext.experimental.extraStrategies = sqlContext.experimental.extraStrategies :+ HermesStrategy
-      }
-      else {
-        sqlContext.experimental.extraOptimizations = Seq()
-      }
+      PredefinedJoinExec.setSparkContext(sparkContext)
 
       val metadataHive = sparkSession
         .sharedState.externalCatalog.unwrapped.asInstanceOf[HiveExternalCatalog].client
