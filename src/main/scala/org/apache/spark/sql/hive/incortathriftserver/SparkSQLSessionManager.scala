@@ -18,6 +18,7 @@
 package org.apache.spark.sql.hive.incortathriftserver
 
 import com.incorta.barq.logical.{PredefinedJoinQueryPlanOptimization, PredefinedJoinStrategy}
+import com.incorta.hermes.plan.{FinalOptimization, HermesFilterOptimization, HermesStrategy, HermesViewOptimization, RequiredColumnsOptimization}
 import org.apache.hadoop.hive.conf.HiveConf
 import org.apache.hive.service.cli.SessionHandle
 import org.apache.hive.service.cli.session.SessionManager
@@ -29,7 +30,7 @@ import org.apache.spark.sql.hive.incortathriftserver.ReflectionUtils._
 import org.apache.spark.sql.hive.incortathriftserver.server.SparkSQLOperationManager
 
 
-private[hive] class SparkSQLSessionManager(hiveServer: HiveServer2, sqlContext: SQLContext)
+private[hive] class SparkSQLSessionManager(hiveServer: HiveServer2, sqlContext: SQLContext, optimization: String)
   extends SessionManager(hiveServer)
   with ReflectedCompositeService {
 
@@ -63,12 +64,33 @@ private[hive] class SparkSQLSessionManager(hiveServer: HiveServer2, sqlContext: 
     if (sessionConf != null && sessionConf.containsKey("use:database")) {
       ctx.sql(s"use ${sessionConf.get("use:database")}")
     }
+    // Adding Custome Optimizations
+    if (optimization == "barq") {
+      println("Adding PredefinedJoinQueryPlanOptimization Optimization")
+      ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ PredefinedJoinQueryPlanOptimization
 
-    println("Adding PredefinedJoinQueryPlanOptimization Optimization")
-    ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ PredefinedJoinQueryPlanOptimization
+      println("Adding PredefinedJoinStrategy Strategy")
+      ctx.experimental.extraStrategies = ctx.experimental.extraStrategies :+ PredefinedJoinStrategy
+      }
+    else if (optimization == "hermes") {
+      println("Adding HermesViewOptimization Optimization")
+      ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ HermesViewOptimization
 
-    println("Adding PredefinedJoinStrategy Strategy")
-    ctx.experimental.extraStrategies = ctx.experimental.extraStrategies :+ PredefinedJoinStrategy
+      println("Adding RequiredColumnsOptimization Optimization")
+      ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ RequiredColumnsOptimization
+
+      println("Adding HermesFilterOptimization Optimization")
+      ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ HermesFilterOptimization
+
+      println("Adding FinalOptimization Optimization")
+      ctx.experimental.extraOptimizations = ctx.experimental.extraOptimizations :+ FinalOptimization
+
+      println("Adding HermesStrategy Strategy")
+      ctx.experimental.extraStrategies = ctx.experimental.extraStrategies :+ HermesStrategy
+      }
+    else {
+      ctx.experimental.extraOptimizations = Seq()
+      }
 
     sparkSqlOperationManager.sessionToContexts.put(sessionHandle, ctx)
     sessionHandle

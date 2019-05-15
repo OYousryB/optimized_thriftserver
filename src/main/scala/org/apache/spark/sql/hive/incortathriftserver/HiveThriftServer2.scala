@@ -71,7 +71,7 @@ object HiveThriftServer2 extends Logging {
   }
 
   def main(args: Array[String]) {
-    val optimization: String = if (args.contains("hermes")) "hermes"
+    var optimization: String = if (args.contains("hermes")) "hermes"
     else if (args.contains("barq")) "barq"
     else "vanilla"
 
@@ -93,7 +93,7 @@ object HiveThriftServer2 extends Logging {
 
     try {
       val server = new HiveThriftServer2(SparkSQLEnv.sqlContext)
-      server.init(executionHive.conf)
+      server.init(executionHive.conf, optimization)
       server.start()
       logInfo("HiveThriftServer2 started")
       listener = new HiveThriftServer2Listener(server, SparkSQLEnv.sqlContext.conf)
@@ -280,8 +280,8 @@ private[hive] class HiveThriftServer2(sqlContext: SQLContext)
   // started, and then once only.
   private val started = new AtomicBoolean(false)
 
-  override def init(hiveConf: HiveConf) {
-    val sparkSqlCliService = new SparkSQLCLIService(this, sqlContext)
+  def init(hiveConf: HiveConf, optimization: String) {
+    val sparkSqlCliService = new SparkSQLCLIService(this, sqlContext, optimization)
     setSuperField(this, "cliService", sparkSqlCliService)
     addService(sparkSqlCliService)
 

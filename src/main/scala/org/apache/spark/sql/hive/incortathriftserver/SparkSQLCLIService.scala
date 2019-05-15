@@ -37,14 +37,14 @@ import org.apache.hive.service.server.HiveServer2
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.hive.incortathriftserver.ReflectionUtils._
 
-private[hive] class SparkSQLCLIService(hiveServer: HiveServer2, sqlContext: SQLContext)
+private[hive] class SparkSQLCLIService(hiveServer: HiveServer2, sqlContext: SQLContext, optimization: String)
   extends CLIService(hiveServer)
   with ReflectedCompositeService {
 
   override def init(hiveConf: HiveConf) {
     setSuperField(this, "hiveConf", hiveConf)
 
-    val sparkSqlSessionManager = new SparkSQLSessionManager(hiveServer, sqlContext)
+    val sparkSqlSessionManager = new SparkSQLSessionManager(hiveServer, sqlContext, optimization)
     setSuperField(this, "sessionManager", sparkSqlSessionManager)
     addService(sparkSqlSessionManager)
     var sparkServiceUGI: UserGroupInformation = null
